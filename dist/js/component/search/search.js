@@ -1,5 +1,9 @@
-var route = window.location.origin + '/search-user?name=';
-function showResult(str) {
+$("#search").keyup(function(e) {
+    var str = e.target.value;
+    var route = e.target.name;
+    var url = window.location.origin + '/admin/' + route + '?key=';
+    var xmlhttp=new XMLHttpRequest();
+
     if (str.length==0) {
         document.getElementById("livesearch").innerHTML="";
         document.getElementById("livesearch").style.zIndex="9999";
@@ -7,7 +11,6 @@ function showResult(str) {
         document.getElementById("tableContent").style.display = "block";
         return;
     }
-    var xmlhttp=new XMLHttpRequest();
     xmlhttp.onreadystatechange=function() {
         if (this.readyState==4 && this.status==200) {
             document.getElementById("livesearch").innerHTML=this.responseText;
@@ -15,6 +18,6 @@ function showResult(str) {
             document.getElementById("tableContent").style.display = "none";
         }
     }
-    xmlhttp.open("GET", route + str, true);
+    xmlhttp.open("GET", url + str, true);
     xmlhttp.send();
-}
+});
